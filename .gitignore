@@ -1,0 +1,5 @@
+*.elc
+*.~undo-tree
+*~
+.cask
+flycheck_*
