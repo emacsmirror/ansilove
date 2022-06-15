@@ -55,7 +55,7 @@
   :group 'image
   :group 'text)
 
-(defcustom ansilove-ansilove-executable "ansilove"
+(defcustom ansilove-executable "ansilove"
   "Path or name to the \"ansilove\" executable."
   :safe 'stringp
   :type 'file
@@ -91,13 +91,13 @@
 ;;       before calling `ansilove--convert-file-to-png'.
 
 (defun ansilove--convert-file-to-png (input-file output-file)
-  "Wrapper for calling ‘ansilove--ansilove-executable’.
-Calls ‘ansilove--ansilove-executable’ given INPUT-FILE as input and
+  "Wrapper for calling ‘ansilove-executable’.
+Calls ‘ansilove-executable’ given INPUT-FILE as input and
 OUTPUT-FILE as output."
   (let ((output-buffer (get-buffer-create "Ansilove-Process"))
         (error-buffer (get-buffer-create "Ansilove-Error")))
     (shell-command (format "%s -o %s %s"
-                           ansilove-ansilove-executable
+                           ansilove-executable
                            output-file
                            input-file)
                    output-buffer
@@ -139,9 +139,10 @@ Returns a path to a file in ‘ansilove-temporary-directory’."
     temporary-output))
 
 (defun ansilove--check-executable ()
-  "Check if ‘ansilove-ansilove-executable’ is usable."
-  (or (executable-find ansilove-ansilove-executable)
-      (file-executable-p ansilove-ansilove-executable)))
+  "Check if ‘ansilove-executable’ is usable.
+Return t if true and nil if false."
+  (or (executable-find ansilove-executable)
+      (file-executable-p ansilove-executable)))
 
 
 ;; Mode
@@ -168,7 +169,7 @@ Returns a path to a file in ‘ansilove-temporary-directory’."
   (message "Press the \"a\" key to view this buffer as a PNG image.")
   (unless (ansilove--check-executable)
     (message "Warning: The required executable %s is unusable!"
-             ansilove-ansilove-executable)))
+             ansilove-executable)))
 
 ;;;###autoload
 (defvar ansilove-supported-file-extensions
@@ -212,7 +213,7 @@ Display the results by visiting the a temporarily created file."
     (find-file (ansilove--buffer-to-png (current-buffer))))
    (t
     (error "Fatal error: The required executable %s is unusable!"
-           ansilove-ansilove-executable))))
+           ansilove-executable))))
 
 ;;;###autoload
 (defun ansilove ()
