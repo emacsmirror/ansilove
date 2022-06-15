@@ -104,11 +104,12 @@ OUTPUT-FILE as output."
                    error-buffer)))
 
 (defun ansilove--buffer-to-png (buffer)
-  "Give BUFFER contents to \"ansilove\".
-If BUFFER is a file take the BUFFER's file as input,
-else save buffer to a temporary file and
+  "Convert BUFFER contents to a PNG file.
+If BUFFER is associated with a file take the BUFFER's file as input,
+else save BUFFER to a temporary file and
 feed that file to `ansilove--convert-file-to-png'.
-Returns a path to a file in ‘ansilove-temporary-directory’."
+Returns a path to a PNG file created by \"ansilove\"
+inside the ‘ansilove-temporary-directory’."
   (ansilove--init-temporary-directory)
   (let* ((buffer-file-path (buffer-file-name buffer))
          (temporary-name
