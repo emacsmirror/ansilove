@@ -37,6 +37,10 @@
 
 ;; ansilove repository: https://github.com/ansilove/ansilove/
 
+;; To test this library out open one of files from ansilove's examples
+;; (https://github.com/ansilove/ansilove/tree/master/examples/)
+;; and call `ansilove' (M-x ansilove).
+
 
 
 ;;; Code:
