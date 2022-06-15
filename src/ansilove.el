@@ -22,7 +22,7 @@
 
 ;; Author: Maciej Barć <xgqt@riseup.net>
 ;; Homepage: https://gitlab.com/xgqt/emacs-ansilove/
-;; Version: 0.0.0
+;; Version: 0.1.0
 ;; Package-Requires: ((emacs "26.1"))
 
 
