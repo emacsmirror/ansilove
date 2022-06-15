@@ -142,9 +142,14 @@ Display the results by visiting the a temporarily created file."
 (defun ansilove-clean-temporary-directory ()
   "Remove lingering temporary files form ‘ansilove-temporary-directory’."
   (interactive)
-  (mapc (lambda (file) (delete-file file))
-        (directory-files-recursively ansilove-temporary-directory
-                                     ".*\\.\\(png\\|txt\\)$")))
+  (cond
+   ((file-exists-p ansilove-temporary-directory)
+    (mapc (lambda (file) (delete-file file))
+          (directory-files-recursively ansilove-temporary-directory
+                                       ".*\\.\\(png\\|txt\\)$")))
+   (t
+    (message "The directory %s does not exist."
+             ansilove-temporary-directory))))
 
 ;;;###autoload
 (defun ansilove ()
@@ -152,9 +157,9 @@ Display the results by visiting the a temporarily created file."
 If ‘ansilove-clean-temporary-directory-before-conversion’ is non-nil
 call `ansilove-clean-temporary-directory' before starting conversion."
   (interactive)
+  (ansilove--init-temporary-directory)
   (when ansilove-clean-temporary-directory-before-conversion
     (ansilove-clean-temporary-directory))
-  (ansilove--init-temporary-directory)
   (ansilove--convert-and-disply-now))
 
 
