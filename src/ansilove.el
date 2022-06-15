@@ -1,4 +1,4 @@
-;;; ansilove.el --- ansilove integration -*- lexical-binding: t -*-
+;;; ansilove.el --- Ansilove integration -*- lexical-binding: t -*-
 
 
 ;; This file is part of emacs-ansilove.
@@ -23,7 +23,7 @@
 ;; Author: Maciej Barć <xgqt@riseup.net>
 ;; Homepage: https://gitlab.com/xgqt/emacs-ansilove
 ;; Version: 0.0.0
-;; Package-Requires: ((emacs "24.3"))
+;; Package-Requires: ((emacs "26.1"))
 
 
 
@@ -41,6 +41,86 @@
 
 ;;; Code:
 
+
+;; Custom variables
+
+(defgroup ansilove nil
+  "Ansilove integration."
+  :group 'emacs)
+
+(defcustom ansilove--ansilove-executable "ansilove"
+  "Path or name to the \"ansilove\" executable."
+  :safe 'stringp
+  :type 'file
+  :group 'ansilove)
+
+(defcustom ansilove--temporary-directory
+  (expand-file-name (concat "." user-full-name "_Emacs_ansilove")
+                    temporary-file-directory)
+  "Temporary directory path used for file conversion via \"anilove\"."
+  :safe 'stringp
+  :type 'file
+  :group 'ansilove)
+
+
+;; Helper functions
+
+(defun ansilove--init-temporary-directory ()
+  "Ensure ANSILOVE--TEMPORARY-DIRECTORY is writable."
+  (when (not (file-exists-p ansilove--temporary-directory))
+    (with-temp-buffer
+      (make-directory ansilove--temporary-directory))))
+
+;; TODO: Completion-read of conversion method
+;;       before calling `ansilove--convert-file-to-png'.
+
+(defun ansilove--convert-file-to-png (input-file output-file)
+  "Wrapper for calling ANSILOVE--ANSILOVE-EXECUTABLE.
+Calls ANSILOVE--ANSILOVE-EXECUTABLE given INPUT-FILE as input and
+OUTPUT-FILE as output."
+  (let ((output-buffer (get-buffer-create "Ansilove-Process"))
+        (error-buffer (get-buffer-create "Ansilove-Error")))
+    (shell-command (format "%s -o %s %s"
+                           ansilove--ansilove-executable
+                           output-file
+                           input-file)
+                   output-buffer
+                   error-buffer)))
+
+(defun ansilove--buffer-to-png (buffer)
+  "Give BUFFER contents to \"ansilove\".
+Returns a path to a file in ANSILOVE--TEMPORARY-DIRECTORY."
+  (ansilove--init-temporary-directory)
+  (let* ((temporary-name
+          (concat "ansilove_" (number-to-string (abs (random)))))
+         (temporary-input
+          (expand-file-name (concat temporary-name ".txt")
+                            ansilove--temporary-directory))
+         (temporary-output
+          (expand-file-name (concat temporary-name ".png")
+                            ansilove--temporary-directory)))
+    (with-current-buffer buffer
+      (write-file temporary-input))
+    (ansilove--convert-file-to-png temporary-input temporary-output)
+    (kill-buffer (concat temporary-name ".txt"))
+    (delete-file temporary-input)
+    temporary-output))
+
+(defun ansilove--convert-and-disply-now ()
+  "Convert current buffer with \"ansilove\" and display the results."
+  (find-file (ansilove--buffer-to-png (current-buffer))))
+
+
+;; Main provided features
+
+;; TODO: Add a special mode: before buffer is closed, delete the file it holds.
+
+;;;###autoload
+(defun ansilove ()
+  "Display current file as PNG image using the \"ansilove\" tool."
+  (interactive)
+  (ansilove--init-temporary-directory)
+  (ansilove--convert-and-disply-now))
 
 
 (provide 'ansilove)
