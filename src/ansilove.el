@@ -143,10 +143,42 @@ Display the results by visiting the a temporarily created file."
   (find-file (ansilove--buffer-to-png (current-buffer))))
 
 
-;; Main provided features
+;; Mode
 
-;; TODO: auto-mode-alist for "adf" "ans" "bin" "idf" "pcb" "tnd" "xb"
-;;       autoconvert? ask to convert? also enable view-mode?
+(defvar ansilove-mode-hook nil
+  "Hook for ansilove major mode.")
+
+(defvar ansilove-mode-map
+  (let ((ansilove-mode-map (make-keymap)))
+    (define-key ansilove-mode-map (kbd "?") 'describe-mode)
+    (define-key ansilove-mode-map (kbd "C-c C-c") 'ansilove)
+    (define-key ansilove-mode-map (kbd "a") 'ansilove)
+    (define-key ansilove-mode-map (kbd "h") 'describe-mode)
+    (define-key ansilove-mode-map (kbd "q") 'quit-window)
+    ansilove-mode-map)
+  "Key map for ansilove major mode.")
+
+;;;###autoload
+(define-derived-mode ansilove-mode fundamental-mode "ansilove"
+  "Major mode for ANSI image files."
+  (setq buffer-read-only t)
+  (run-hooks 'ansilove-mode-hook)
+  (use-local-map ansilove-mode-map)
+  (message "Press the \"a\" key to view this buffer as a PNG image."))
+
+;;;###autoload
+(defvar ansilove-supported-file-extensions
+  '("adf" "ans" "bin" "idf" "pcb" "tnd" "xb")
+  "List of file extensions supported by \"ansilove\".")
+
+;;;###autoload
+(mapc (lambda (ext)
+        (add-to-list 'auto-mode-alist
+                     `(,(format "\\.%s\\'" ext) . ansilove-mode)))
+      ansilove-supported-file-extensions)
+
+
+;; Main provided features
 
 ;; TODO: Add a special mode: before buffer is closed, delete the file it holds.
 
