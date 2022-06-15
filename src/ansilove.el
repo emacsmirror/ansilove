@@ -96,23 +96,30 @@ OUTPUT-FILE as output."
 
 (defun ansilove--buffer-to-png (buffer)
   "Give BUFFER contents to \"ansilove\".
+If BUFFER is a file take the BUFFER's file as input,
+else save buffer to a temporary file and
+feed that file to `ansilove--convert-file-to-png'.
 Returns a path to a file in ANSILOVE--TEMPORARY-DIRECTORY."
   (ansilove--init-temporary-directory)
-  (let* ((temporary-name
+  (let* ((buffer-file-path (buffer-file-name buffer))
+         (temporary-name
           (concat "ansilove_" (number-to-string (abs (random)))))
-         (temporary-input-name
-          (concat temporary-name ".txt"))
-         (temporary-input
-          (expand-file-name temporary-input-name
-                            ansilove--temporary-directory))
          (temporary-output
           (expand-file-name (concat temporary-name ".png")
                             ansilove--temporary-directory)))
-    (with-current-buffer buffer
-      (write-file temporary-input))
-    (ansilove--convert-file-to-png temporary-input temporary-output)
-    (kill-buffer temporary-input-name)
-    (delete-file temporary-input)
+    (cond
+     (buffer-file-path
+      (ansilove--convert-file-to-png buffer-file-path temporary-output))
+     (t
+      (let* ((temporary-input-name (concat temporary-name ".txt"))
+             (temporary-input
+              (expand-file-name temporary-input-name
+                                ansilove--temporary-directory)))
+        (with-current-buffer buffer
+          (write-file temporary-input))
+        (ansilove--convert-file-to-png temporary-input temporary-output)
+        (kill-buffer temporary-input-name)
+        (delete-file temporary-input))))
     temporary-output))
 
 (defun ansilove--convert-and-disply-now ()
