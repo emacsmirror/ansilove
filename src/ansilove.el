@@ -172,10 +172,11 @@ Display the results by visiting the a temporarily created file."
   "List of file extensions supported by \"ansilove\".")
 
 ;;;###autoload
-(mapc (lambda (ext)
-        (add-to-list 'auto-mode-alist
-                     `(,(format "\\.%s\\'" ext) . ansilove-mode)))
-      ansilove-supported-file-extensions)
+(when (boundp 'ansilove-supported-file-extensions)
+  (mapc (lambda (ext)
+          (add-to-list 'auto-mode-alist
+                       `(,(format "\\.%s\\'" ext) . ansilove-mode)))
+        ansilove-supported-file-extensions))
 
 
 ;; Main provided features
