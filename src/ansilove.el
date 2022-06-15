@@ -70,7 +70,7 @@
   :group 'ansilove)
 
 (defcustom ansilove-clean-temporary-directory-before-conversion nil
-  "Non-nil to clean ANSILOVE-TEMPORARY-DIRECTORY at `ansilove' start."
+  "Non-nil to clean ‘ansilove-temporary-directory’ at `ansilove' start."
   :type 'boolean
   :group 'ansilove)
 
@@ -78,17 +78,19 @@
 ;; Helper functions
 
 (defun ansilove--init-temporary-directory ()
-  "Ensure ANSILOVE-TEMPORARY-DIRECTORY is writable."
+  "Ensure ‘ansilove-temporary-directory’ is writable."
   (when (not (file-exists-p ansilove-temporary-directory))
     (with-temp-buffer
-      (make-directory ansilove-temporary-directory))))
+      (make-directory ansilove-temporary-directory)))
+  (when (not (file-writable-p ansilove-temporary-directory))
+    (error "The directory %s is not writable!" ansilove-temporary-directory)))
 
 ;; TODO: Completion-read of conversion method
 ;;       before calling `ansilove--convert-file-to-png'.
 
 (defun ansilove--convert-file-to-png (input-file output-file)
-  "Wrapper for calling ANSILOVE--ANSILOVE-EXECUTABLE.
-Calls ANSILOVE--ANSILOVE-EXECUTABLE given INPUT-FILE as input and
+  "Wrapper for calling ‘ansilove--ansilove-executable’.
+Calls ‘ansilove--ansilove-executable’ given INPUT-FILE as input and
 OUTPUT-FILE as output."
   (let ((output-buffer (get-buffer-create "Ansilove-Process"))
         (error-buffer (get-buffer-create "Ansilove-Error")))
@@ -104,7 +106,7 @@ OUTPUT-FILE as output."
 If BUFFER is a file take the BUFFER's file as input,
 else save buffer to a temporary file and
 feed that file to `ansilove--convert-file-to-png'.
-Returns a path to a file in ANSILOVE-TEMPORARY-DIRECTORY."
+Returns a path to a file in ‘ansilove-temporary-directory’."
   (ansilove--init-temporary-directory)
   (let* ((buffer-file-path (buffer-file-name buffer))
          (temporary-name
@@ -128,7 +130,8 @@ Returns a path to a file in ANSILOVE-TEMPORARY-DIRECTORY."
     temporary-output))
 
 (defun ansilove--convert-and-disply-now ()
-  "Convert current buffer with \"ansilove\" and display the results."
+  "Convert current buffer using `ansilove--buffer-to-png'.
+Display the results by visiting the a temporarily created file."
   (find-file (ansilove--buffer-to-png (current-buffer))))
 
 
@@ -137,7 +140,7 @@ Returns a path to a file in ANSILOVE-TEMPORARY-DIRECTORY."
 ;; TODO: Add a special mode: before buffer is closed, delete the file it holds.
 
 (defun ansilove-clean-temporary-directory ()
-  "Remove lingering temporary files form ANSILOVE-TEMPORARY-DIRECTORY."
+  "Remove lingering temporary files form ‘ansilove-temporary-directory’."
   (interactive)
   (mapc (lambda (file) (delete-file file))
         (directory-files-recursively ansilove-temporary-directory
@@ -145,7 +148,9 @@ Returns a path to a file in ANSILOVE-TEMPORARY-DIRECTORY."
 
 ;;;###autoload
 (defun ansilove ()
-  "Display current file as PNG image using the \"ansilove\" tool."
+  "Display current file as PNG image.
+If ‘ansilove-clean-temporary-directory-before-conversion’ is non-nil
+call `ansilove-clean-temporary-directory' before starting conversion."
   (interactive)
   (when ansilove-clean-temporary-directory-before-conversion
     (ansilove-clean-temporary-directory))
