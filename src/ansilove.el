@@ -1,4 +1,4 @@
-;;; ansilove.el --- Ansilove integration -*- lexical-binding: t -*-
+;;; ansilove.el --- Display buffers as PNG images using ansilove -*- lexical-binding: t -*-
 
 
 ;; This file is part of emacs-ansilove.
@@ -30,7 +30,7 @@
 ;;; Commentary:
 
 
-;; Use ansilove from GNU Emacs.
+;; Display buffers as PNG images using ansilove.
 
 ;; This package provides some integration with the ansilove tool,
 ;; which is a ANSI and ASCII art to PNG converter.
@@ -160,7 +160,7 @@ Display the results by visiting the a temporarily created file."
 
 ;;;###autoload
 (defun ansilove ()
-  "Display current file as PNG image.
+  "Display current buffer as a PNG image.
 If ‘ansilove-clean-temporary-directory-before-conversion’ is non-nil
 call `ansilove-clean-temporary-directory' before starting conversion."
   (interactive)
