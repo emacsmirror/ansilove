@@ -119,13 +119,20 @@ Returns a path to a file in ‘ansilove-temporary-directory’."
       (ansilove--convert-file-to-png buffer-file-path temporary-output))
      (t
       (let* ((temporary-input-name (concat temporary-name ".txt"))
+             (temporary-input-buffer (get-buffer-create temporary-input-name))
              (temporary-input
               (expand-file-name temporary-input-name
-                                ansilove-temporary-directory)))
-        (with-current-buffer buffer
+                                ansilove-temporary-directory))
+             (temporary-input-contents
+              (with-current-buffer buffer
+                (buffer-string))))
+        (with-current-buffer temporary-input-buffer
+          (insert temporary-input-contents)
           (write-file temporary-input))
+        ;; CONSIDER: Call "ansilove" with Emacs's frame/window width?
+        ;;           Right now output PNG's text is sometimes wrapped.
         (ansilove--convert-file-to-png temporary-input temporary-output)
-        (kill-buffer temporary-input-name)
+        (kill-buffer temporary-input-buffer)
         (delete-file temporary-input))))
     temporary-output))
 
