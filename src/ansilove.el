@@ -46,7 +46,9 @@
 
 (defgroup ansilove nil
   "Ansilove integration."
-  :group 'emacs)
+  :group 'external
+  :group 'image
+  :group 'text)
 
 (defcustom ansilove--ansilove-executable "ansilove"
   "Path or name to the \"ansilove\" executable."
