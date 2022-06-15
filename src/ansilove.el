@@ -145,6 +145,9 @@ Display the results by visiting the a temporarily created file."
 
 ;; Main provided features
 
+;; TODO: auto-mode-alist for "adf" "ans" "bin" "idf" "pcb" "tnd" "xb"
+;;       autoconvert? ask to convert? also enable view-mode?
+
 ;; TODO: Add a special mode: before buffer is closed, delete the file it holds.
 
 (defun ansilove-clean-temporary-directory ()
