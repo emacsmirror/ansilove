@@ -21,7 +21,7 @@
 
 
 ;; Author: Maciej Barć <xgqt@riseup.net>
-;; Homepage: https://gitlab.com/xgqt/emacs-ansilove
+;; Homepage: https://gitlab.com/xgqt/emacs-ansilove/
 ;; Version: 0.0.0
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -61,8 +61,9 @@
   :group 'ansilove)
 
 (defcustom ansilove--temporary-directory
-  (expand-file-name (concat "." user-full-name "_Emacs_ansilove")
-                    temporary-file-directory)
+  (file-name-as-directory
+   (expand-file-name (concat "." user-full-name "_Emacs_ansilove")
+                     temporary-file-directory))
   "Temporary directory path used for file conversion via \"anilove\"."
   :safe 'stringp
   :type 'file
@@ -99,8 +100,10 @@ Returns a path to a file in ANSILOVE--TEMPORARY-DIRECTORY."
   (ansilove--init-temporary-directory)
   (let* ((temporary-name
           (concat "ansilove_" (number-to-string (abs (random)))))
+         (temporary-input-name
+          (concat temporary-name ".txt"))
          (temporary-input
-          (expand-file-name (concat temporary-name ".txt")
+          (expand-file-name temporary-input-name
                             ansilove--temporary-directory))
          (temporary-output
           (expand-file-name (concat temporary-name ".png")
@@ -108,7 +111,7 @@ Returns a path to a file in ANSILOVE--TEMPORARY-DIRECTORY."
     (with-current-buffer buffer
       (write-file temporary-input))
     (ansilove--convert-file-to-png temporary-input temporary-output)
-    (kill-buffer (concat temporary-name ".txt"))
+    (kill-buffer temporary-input-name)
     (delete-file temporary-input)
     temporary-output))
 
