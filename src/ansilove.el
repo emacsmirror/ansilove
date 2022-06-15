@@ -84,7 +84,8 @@
     (with-temp-buffer
       (make-directory ansilove-temporary-directory)))
   (when (not (file-writable-p ansilove-temporary-directory))
-    (error "The directory %s is not writable!" ansilove-temporary-directory)))
+    (error "Fatal error: The directory %s is not writable!"
+           ansilove-temporary-directory)))
 
 ;; TODO: Completion-read of conversion method
 ;;       before calling `ansilove--convert-file-to-png'.
@@ -137,10 +138,10 @@ Returns a path to a file in ‘ansilove-temporary-directory’."
         (delete-file temporary-input))))
     temporary-output))
 
-(defun ansilove--convert-and-disply-now ()
-  "Convert current buffer using `ansilove--buffer-to-png'.
-Display the results by visiting the a temporarily created file."
-  (find-file (ansilove--buffer-to-png (current-buffer))))
+(defun ansilove--check-executable ()
+  "Check if ‘ansilove-ansilove-executable’ is usable."
+  (or (executable-find ansilove-ansilove-executable)
+      (file-executable-p ansilove-ansilove-executable)))
 
 
 ;; Mode
@@ -164,7 +165,10 @@ Display the results by visiting the a temporarily created file."
   (setq buffer-read-only t)
   (run-hooks 'ansilove-mode-hook)
   (use-local-map ansilove-mode-map)
-  (message "Press the \"a\" key to view this buffer as a PNG image."))
+  (message "Press the \"a\" key to view this buffer as a PNG image.")
+  (unless (ansilove--check-executable)
+    (message "Warning: The required executable %s is unusable!"
+             ansilove-ansilove-executable)))
 
 ;;;###autoload
 (defvar ansilove-supported-file-extensions
@@ -192,8 +196,23 @@ Display the results by visiting the a temporarily created file."
           (directory-files-recursively ansilove-temporary-directory
                                        ".*\\.\\(png\\|txt\\)$")))
    (t
-    (message "The directory %s does not exist."
+    (message "Warning: The directory %s does not exist."
              ansilove-temporary-directory))))
+
+;; The function `ansilove-convert-and-disply-now' is automatically loaded
+;; mainly for development and testing purposes.
+
+;;;###autoload
+(defun ansilove-convert-and-disply-now ()
+  "Convert current buffer using `ansilove--buffer-to-png'.
+Display the results by visiting the a temporarily created file."
+  (interactive)
+  (cond
+   ((ansilove--check-executable)
+    (find-file (ansilove--buffer-to-png (current-buffer))))
+   (t
+    (error "Fatal error: The required executable %s is unusable!"
+           ansilove-ansilove-executable))))
 
 ;;;###autoload
 (defun ansilove ()
@@ -204,7 +223,7 @@ call `ansilove-clean-temporary-directory' before starting conversion."
   (ansilove--init-temporary-directory)
   (when ansilove-clean-temporary-directory-before-conversion
     (ansilove-clean-temporary-directory))
-  (ansilove--convert-and-disply-now))
+  (ansilove-convert-and-disply-now))
 
 
 (provide 'ansilove)
