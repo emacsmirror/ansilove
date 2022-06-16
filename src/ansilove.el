@@ -75,6 +75,13 @@
   :type 'boolean
   :group 'ansilove)
 
+(defcustom ansilove-quick-example-test-url
+  "https://github.com/ansilove/ansilove/raw/master/examples/burps/bs-alove.ans"
+  "File URL to download for `ansilove-quick-example-test'."
+  :safe 'stringp
+  :type 'url
+  :group 'ansilove)
+
 
 ;; Helper functions
 
@@ -223,6 +230,19 @@ call `ansilove-clean-temporary-directory' before starting conversion."
   (when ansilove-clean-temporary-directory-before-conversion
     (ansilove-clean-temporary-directory))
   (ansilove-convert-and-disply-now))
+
+;;;###autoload
+(defun ansilove-quick-example-test ()
+  "Library showcase on one of the examples from \"ansilove\" repository.
+Download a file specified by ‘ansilove-quick-example-test-url’ and open it."
+  (interactive)
+  (let ((test-file (expand-file-name "test.txt" ansilove-temporary-directory))
+        (ansilove-clean-temporary-directory-before-conversion nil))
+    (ansilove--init-temporary-directory)
+    (url-copy-file ansilove-quick-example-test-url test-file t)
+    (with-current-buffer (find-file-noselect test-file)
+      (ansilove-mode)
+      (ansilove))))
 
 
 (provide 'ansilove)
