@@ -94,8 +94,8 @@
   "Wrapper for calling ‘ansilove-executable’.
 Calls ‘ansilove-executable’ given INPUT-FILE as input and
 OUTPUT-FILE as output."
-  (let ((output-buffer (get-buffer-create "Ansilove-Process"))
-        (error-buffer (get-buffer-create "Ansilove-Error")))
+  (let ((output-buffer (get-buffer-create "*Ansilove-Process*"))
+        (error-buffer (get-buffer-create "*Ansilove-Error*")))
     (shell-command (format "%s -o %s %s"
                            ansilove-executable
                            output-file
