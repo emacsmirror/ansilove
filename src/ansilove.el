@@ -174,7 +174,7 @@ Return t if true and nil if false."
   (message "Press the \"a\" key to view this buffer as a PNG image.")
   (unless (image-type-available-p 'imagemagick)
     (message
-     "Warning: ImageMagick support is missing from Your running version of Emacs."))
+     "Warning: ImageMagick support is missing from this version of Emacs."))
   (unless (display-images-p)
     (message
      "Warning: Currently used display does not support displaying images."))
