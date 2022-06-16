@@ -65,7 +65,7 @@
   (file-name-as-directory
    (expand-file-name (concat "." user-full-name "_Emacs_ansilove")
                      temporary-file-directory))
-  "Temporary directory path used for file conversion via \"anilove\"."
+  "Temporary directory path used for file conversion via \"ansilove\"."
   :safe 'stringp
   :type 'file
   :group 'ansilove)
