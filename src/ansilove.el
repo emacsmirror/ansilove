@@ -94,14 +94,11 @@
   "Wrapper for calling ‘ansilove-executable’.
 Calls ‘ansilove-executable’ given INPUT-FILE as input and
 OUTPUT-FILE as output."
-  (let ((output-buffer (get-buffer-create "*Ansilove-Process*"))
-        (error-buffer (get-buffer-create "*Ansilove-Error*")))
-    (shell-command (format "%s -o %s %s"
-                           ansilove-executable
-                           output-file
-                           input-file)
-                   output-buffer
-                   error-buffer)))
+  (let ((output-buffer (get-buffer-create "*Ansilove-Output*")))
+    (call-process-shell-command
+     (format "%s -o %s %s" ansilove-executable output-file input-file)
+     nil
+     output-buffer)))
 
 (defun ansilove--buffer-to-png (buffer)
   "Convert BUFFER contents to a PNG file.
