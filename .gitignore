@@ -1,5 +1,8 @@
 *.elc
 *.~undo-tree
 *~
-.cask
 flycheck_*
+
+.cask/
+.eldev/
+dist/

@@ -1,0 +1,9 @@
+;; -*- mode: emacs-lisp; lexical-binding: t -*-
+
+(eldev-use-package-archive 'melpa)
+
+(setf eldev-project-main-file
+      "./src/ansilove.el")
+
+(setf eldev-standard-excludes
+      (append eldev-standard-excludes '("./extras")))
