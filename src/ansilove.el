@@ -42,8 +42,8 @@
 ;; - ansilove
 ;;   to convert files to PNG images,
 ;; - Emacs built with ImageMagick support
-;;   to dispaly PNG images created by ansilove,
-;; - ImageMagick with PNG fiel support
+;;   to display PNG images created by ansilove,
+;; - ImageMagick with PNG file support
 ;;   to display PNG files.
 
 ;; To test this library out open one of files from ansilove's examples
@@ -99,8 +99,8 @@
     (with-temp-buffer
       (make-directory ansilove-temporary-directory)))
   (when (not (file-writable-p ansilove-temporary-directory))
-    (error "Fatal error: The directory %s is not writable!"
-           ansilove-temporary-directory)))
+    (user-error "Fatal error: The directory %s is not writable!"
+                ansilove-temporary-directory)))
 
 ;; TODO: Completion-read of conversion method
 ;;       before calling `ansilove--convert-file-to-png'.
@@ -231,7 +231,7 @@ Return t if true and nil if false."
 ;; mainly for development and testing purposes.
 
 ;;;###autoload
-(defun ansilove-convert-and-disply-now ()
+(defun ansilove-convert-and-display-now ()
   "Convert current buffer using `ansilove--buffer-to-png'.
 Display the results by visiting the a temporarily created file."
   (interactive)
@@ -239,8 +239,8 @@ Display the results by visiting the a temporarily created file."
    ((ansilove--check-executable)
     (find-file (ansilove--buffer-to-png (current-buffer))))
    (t
-    (error "Fatal error: The required executable %s is unusable!"
-           ansilove-executable))))
+    (user-error "Fatal error: The required executable %s is unusable!"
+                ansilove-executable))))
 
 ;;;###autoload
 (defun ansilove ()
@@ -251,7 +251,7 @@ call `ansilove-clean-temporary-directory' before starting conversion."
   (ansilove--init-temporary-directory)
   (when ansilove-clean-temporary-directory-before-conversion
     (ansilove-clean-temporary-directory))
-  (ansilove-convert-and-disply-now))
+  (ansilove-convert-and-display-now))
 
 ;;;###autoload
 (defun ansilove-quick-test-example ()
