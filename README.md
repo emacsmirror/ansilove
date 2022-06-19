@@ -1,5 +1,7 @@
 # Emacs-Ansilove
 
+[![MELPA](https://melpa.org/packages/ansilove-badge.svg)](https://melpa.org/#/ansilove) [![MELPA Stable](https://stable.melpa.org/packages/ansilove-badge.svg)](https://stable.melpa.org/#/ansilove)
+
 
 ## About
 
