@@ -90,6 +90,11 @@
   :type 'url
   :group 'ansilove)
 
+(defcustom ansilove-mode-hook nil
+  "Hook for ansilove major mode."
+  :type 'hook
+  :group 'ansilove)
+
 
 ;; Helper functions
 
@@ -166,9 +171,6 @@ Return t if true and nil if false."
 
 
 ;; Mode
-
-(defvar ansilove-mode-hook nil
-  "Hook for ansilove major mode.")
 
 (defvar ansilove-mode-map
   (let ((ansilove-mode-map (make-keymap)))
