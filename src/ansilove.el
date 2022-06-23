@@ -87,7 +87,7 @@
   "https://github.com/ansilove/ansilove/raw/master/examples/burps/bs-alove.ans"
   "File URL to download for `ansilove-quick-example-test'."
   :safe 'stringp
-  :type 'url
+  :type 'url-link
   :group 'ansilove)
 
 (defcustom ansilove-mode-hook nil
