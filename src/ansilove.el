@@ -117,6 +117,8 @@
   "Wrapper for calling ‘ansilove-executable’.
 Calls ‘ansilove-executable’ given INPUT-FILE as input and
 OUTPUT-FILE as output."
+  (unless (file-readable-p input-file)
+    (user-error "Fatal error: The file %s is not readable!" input-file))
   (let ((output-buffer (get-buffer-create "*Ansilove-Output*")))
     (call-process-shell-command
      (format "%s -o %s %s" ansilove-executable output-file input-file)
