@@ -17,7 +17,9 @@
 
 Display buffers as PNG images using ansilove.
 
-![emacs-ansilove-logo](./logo.png "Emacs-Ansilove Logo")
+<p align="center">
+    <img src="logo.png" width="250" height="250">
+</p>
 
 
 ## About
