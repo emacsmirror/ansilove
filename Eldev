@@ -6,4 +6,4 @@
       "./src/ansilove.el")
 
 (setf eldev-standard-excludes
-      (append eldev-standard-excludes '("./extras")))
+      `(:or ,eldev-standard-excludes "./extras"))
