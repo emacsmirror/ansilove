@@ -49,4 +49,4 @@ and call `ansilove' (M-x ansilove).
 Copyright (c) 2022, Maciej Barć <xgqt@riseup.net>
 Licensed under the GNU GPL v3 License
 
-SPDX-License-Identifier: GPL-3.0-only
+SPDX-License-Identifier: GPL-3.0-or-later
