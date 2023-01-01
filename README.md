@@ -46,7 +46,7 @@ and call `ansilove' (M-x ansilove).
 
 ## License
 
-Copyright (c) 2022, Maciej Barć <xgqt@riseup.net>
+Copyright (c) 2022-2023, Maciej Barć <xgqt@riseup.net>
 Licensed under the GNU GPL v3 License
 
 SPDX-License-Identifier: GPL-3.0-or-later

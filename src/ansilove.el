@@ -16,7 +16,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with emacs-ansilove.  If not, see <https://www.gnu.org/licenses/>.
 
-;; Copyright (c) 2022, Maciej Barć <xgqt@riseup.net>
+;; Copyright (c) 2022-2023, Maciej Barć <xgqt@riseup.net>
 ;; Licensed under the GNU GPL v3 License
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
