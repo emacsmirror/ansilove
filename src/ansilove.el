@@ -78,7 +78,7 @@
 
 (defcustom ansilove-temporary-directory
   (file-name-as-directory
-   (expand-file-name (concat "." user-full-name "_Emacs_ansilove")
+   (expand-file-name (concat "." user-login-name "_Emacs_ansilove")
                      temporary-file-directory))
   "Temporary directory path used for file conversion via \"ansilove\"."
   :safe 'stringp
