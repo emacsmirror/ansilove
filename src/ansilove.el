@@ -56,6 +56,9 @@
 ;;; Code:
 
 
+(require 'easymenu)
+
+
 ;; Custom variables
 
 (defconst ansilove-version "1.0.0"
@@ -168,7 +171,7 @@ Return t if true and nil if false."
   (or (executable-find ansilove-executable)
       (file-executable-p ansilove-executable)))
 
-(defun ansilove--turn-to-editable-mode ()
+(defun ansilove-turn-to-editable-mode ()
   "Turn current buffer to a editable mode."
   (interactive)
   (setq buffer-read-only nil)
@@ -183,11 +186,18 @@ Return t if true and nil if false."
     (define-key ansilove-mode-map (kbd "?") 'describe-mode)
     (define-key ansilove-mode-map (kbd "C-c C-c") 'ansilove)
     (define-key ansilove-mode-map (kbd "a") 'ansilove)
-    (define-key ansilove-mode-map (kbd "e") 'ansilove--turn-to-editable-mode)
+    (define-key ansilove-mode-map (kbd "e") 'ansilove-turn-to-editable-mode)
     (define-key ansilove-mode-map (kbd "h") 'describe-mode)
     (define-key ansilove-mode-map (kbd "q") 'quit-window)
     ansilove-mode-map)
   "Key map for ansilove major mode.")
+
+(easy-menu-define ansilove-mode-menu ansilove-mode-map
+  "Menu for `ansilove-mode'."
+  '("AnsiLove"
+    ["Convert" ansilove]
+    ["Edit" ansilove-turn-to-editable-mode]
+    ["Help" describe-mode]))
 
 ;;;###autoload
 (define-derived-mode ansilove-mode fundamental-mode "ansilove"
