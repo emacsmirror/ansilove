@@ -23,7 +23,7 @@
 
 ;; Author: Maciej Barć <xgqt@riseup.net>
 ;; Homepage: https://gitlab.com/xgqt/emacs-ansilove/
-;; Version: 1.0.1
+;; Version: 2.0.0
 ;; Keywords: multimedia
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -61,7 +61,7 @@
 
 ;; Custom variables
 
-(defconst ansilove-version "1.0.0"
+(defconst ansilove-version "2.0.0"
   "Emacs-Ansilove version.")
 
 (defgroup ansilove nil
