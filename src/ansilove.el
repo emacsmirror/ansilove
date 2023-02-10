@@ -197,6 +197,7 @@ Return t if true and nil if false."
   '("AnsiLove"
     ["Convert" ansilove]
     ["Edit" ansilove-turn-to-editable-mode]
+    ["Quit" quit-window]
     ["Help" describe-mode]))
 
 ;;;###autoload
