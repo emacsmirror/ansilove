@@ -1,0 +1,13 @@
+;; -*- mode: emacs-lisp; lexical-binding: t -*-
+
+;; Documentation: https://emacs-eldev.github.io/eldev/
+
+(eldev-require-version "1.10.0")
+
+(eldev-use-package-archive 'melpa)
+
+(eldev-use-plugin 'autoloads)
+(eldev-use-plugin 'maintainer)
+(eldev-use-plugin 'undercover)
+
+(setf eldev-project-main-file "./src/main/elisp/ansilove/ansilove.el")

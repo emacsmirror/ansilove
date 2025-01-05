@@ -1,0 +1,1 @@
+(ansilove :fetcher gitlab :repo "xgqt/xgqt-elisp-lib-ansilove" :files ("code/source/v3/ansilove-app/src/main/elisp/ansilove/*"))
