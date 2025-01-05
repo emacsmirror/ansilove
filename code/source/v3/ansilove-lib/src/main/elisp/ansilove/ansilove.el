@@ -1,7 +1,7 @@
 ;;; ansilove.el --- Display buffers as PNG images using ansilove -*- lexical-binding: t -*-
 
 ;; This file is part of xgqt-elisp-lib-ansilove - Ansilove support for GNU Emacs.
-;; Copyright (c) 2022-2025, Maciej Barć <xgqt@riseup.net>
+;; Copyright (c) 2022-2025, Maciej Barć <xgqt@xgqt.org>
 ;; Licensed under the GNU GPL v2 License
 ;;
 ;; xgqt-elisp-lib-ansilove is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with xgqt-elisp-lib-ansilove.  If not, see <https://www.gnu.org/licenses/>.
 
-;; Author: Maciej Barć <xgqt@riseup.net>
+;; Author: Maciej Barć <xgqt@xgqt.org>
 ;; Homepage: https://gitlab.com/xgqt/emacs-ansilove/
 ;; Version: 3.0.0
 ;; Keywords: multimedia
