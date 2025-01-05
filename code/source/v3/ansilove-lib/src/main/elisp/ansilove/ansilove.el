@@ -1,44 +1,37 @@
 ;;; ansilove.el --- Display buffers as PNG images using ansilove -*- lexical-binding: t -*-
 
-
-;; This file is part of emacs-ansilove.
-
-;; emacs-ansilove is free software: you can redistribute it and/or modify
+;; This file is part of xgqt-elisp-lib-ansilove - Ansilove support for GNU Emacs.
+;; Copyright (c) 2022-2025, Maciej Barć <xgqt@riseup.net>
+;; Licensed under the GNU GPL v2 License
+;;
+;; xgqt-elisp-lib-ansilove is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, version 3, or
+;; the Free Software Foundation, either version 2 of the License, or
 ;; (at your option) any later version.
-
-;; emacs-ansilove is distributed in the hope that it will be useful,
+;;
+;; xgqt-elisp-lib-ansilove is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
-
+;;
 ;; You should have received a copy of the GNU General Public License
-;; along with emacs-ansilove.  If not, see <https://www.gnu.org/licenses/>.
-
-;; Copyright (c) 2022-2023, Maciej Barć <xgqt@riseup.net>
-;; Licensed under the GNU GPL v3 License
-;; SPDX-License-Identifier: GPL-3.0-or-later
-
+;; along with xgqt-elisp-lib-ansilove.  If not, see <https://www.gnu.org/licenses/>.
 
 ;; Author: Maciej Barć <xgqt@riseup.net>
 ;; Homepage: https://gitlab.com/xgqt/emacs-ansilove/
-;; Version: 2.0.0
+;; Version: 3.0.0
 ;; Keywords: multimedia
 ;; Package-Requires: ((emacs "26.1"))
 
-
-
 ;;; Commentary:
 
-
 ;; Display buffers as PNG images using ansilove.
-
+;;
 ;; This package provides some integration with the ansilove tool,
 ;; which is a ANSI and ASCII art to PNG converter.
-
+;;
 ;; ansilove repository: https://github.com/ansilove/ansilove/
-
+;;
 ;; There are three non-ELisp dependencies of this library:
 ;; - ansilove
 ;;   to convert files to PNG images,
@@ -46,22 +39,18 @@
 ;;   to display PNG images created by ansilove,
 ;; - ImageMagick with PNG file support
 ;;   to display PNG files.
-
+;;
 ;; To test this library out open one of files from ansilove's examples
 ;; (https://github.com/ansilove/ansilove/tree/master/examples/)
 ;; and call `ansilove' (M-x ansilove).
 
-
-
 ;;; Code:
-
 
 (require 'easymenu)
 
-
 ;; Custom variables
 
-(defconst ansilove-version "2.0.0"
+(defconst ansilove-version "3.0.0"
   "Emacs-Ansilove version.")
 
 (defgroup ansilove nil
@@ -101,7 +90,6 @@
   "Hook for ansilove major mode."
   :type 'hook
   :group 'ansilove)
-
 
 ;; Helper functions
 
@@ -178,7 +166,6 @@ Return t if true and nil if false."
   (fundamental-mode)
   (message "Warning: Entered editable mode."))
 
-
 ;; Mode
 
 (defvar ansilove-mode-map
@@ -229,9 +216,7 @@ Return t if true and nil if false."
                        `(,(format "\\.%s\\'" ext) . ansilove-mode)))
         ansilove-supported-file-extensions))
 
-
 ;; Main provided features
-
 ;; TODO: Add a special mode: before buffer is closed, delete the file it holds.
 
 (defun ansilove-clean-temporary-directory ()
@@ -286,9 +271,6 @@ Download a file specified by ‘ansilove-quick-example-test-url’ and open it."
       (ansilove-mode)
       (ansilove))))
 
-
 (provide 'ansilove)
-
-
 
 ;;; ansilove.el ends here
